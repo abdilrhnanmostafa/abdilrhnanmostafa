@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdulrahman Mustafa | مطور مواقع وتطبيقات</title>
+
+    <!-- خط Tajawal وتأثيرات ألوان حديثة -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* ====== إعدادات المقدمة 3D ====== */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0f19;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            opacity: 1;
+            visibility: visible;
+        }
+        #preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .loader-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 800px;
+        }
+
+        .logo-am {
+            font-size: 4.5rem;
+            font-weight: 900;
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 40%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(99, 102, 241, 0.3);
+            letter-spacing: -3px;
+            z-index: 2;
+            position: relative;
+            animation: logoPulse 2s ease-in-out infinite alternate;
+            transform: translateX(120%);
+            animation: slideInFromRight 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes slideInFromRight {
+            0% { transform: translateX(120%) scale(0.8); opacity: 0; }
+            60% { transform: translateX(-10%) scale(1.05); opacity: 1; }
+            100% { transform: translateX(0) scale(1); opacity: 1; }
+        }
+
+        @keyframes logoPulse {
+            0% { text-shadow: 0 0 30px rgba(99, 102, 241, 0.3); }
+            100% { text-shadow: 0 0 60px rgba(168, 85, 247, 0.6), 0 0 100px rgba(236, 72, 153, 0.3); }
+        }
+
+        .ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid transparent;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: spinRing 3s linear infinite;
+        }
+
+        .ring-1 {
+            width: 180px;
+            height: 180px;
+            border-top: 4px solid #6366f1;
+            border-right: 4px solid #a855f7;
+            border-bottom: 4px solid transparent;
+            border-left: 4px solid transparent;
+            animation-duration: 2.5s;
+            filter: drop-shadow(0 0 10px rgba(99, 102, 241, 0.4));
+        }
+
+        .ring-2 {
+            width: 210px;
+            height: 210px;
+            border-top: 4px solid transparent;
+            border-right: 4px solid #ec4899;
+            border-bottom: 4px solid #a855f7;
+            border-left: 4px solid transparent;
+            animation-duration: 3.2s;
+            animation-direction: reverse;
+            filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.4));
+        }
+
+        .ring-3 {
+            width: 240px;
+            height: 240px;
+            border-top: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 4px solid #6366f1;
+            border-left: 4px solid #ec4899;
+            animation-duration: 4s;
+            filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
+        }
+
+        @keyframes spinRing {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .loader-container {
+            transform-style: preserve-3d;
+        }
+        .ring-1 {
+            transform: translate(-50%, -50%) rotateX(20deg) rotateZ(0deg);
+            animation: spinRing3D 3s linear infinite;
+        }
+        .ring-2 {
+            transform: translate(-50%, -50%) rotateX(-20deg) rotateZ(0deg);
+            animation: spinRing3D 4s linear infinite reverse;
+        }
+        .ring-3 {
+            transform: translate(-50%, -50%) rotateY(30deg) rotateZ(0deg);
+            animation: spinRing3D 5s linear infinite;
+        }
+
+        @keyframes spinRing3D {
+            0% { transform: translate(-50%, -50%) rotateX(var(--rx, 20deg)) rotateZ(0deg); }
+            100% { transform: translate(-50%, -50%) rotateX(var(--rx, 20deg)) rotateZ(360deg); }
+        }
+
+        .ring-1 { --rx: 20deg; }
+        .ring-2 { --rx: -20deg; }
+        .ring-3 { --rx: 0deg; --ry: 30deg; }
+
+        .loading-text {
+            margin-top: 30px;
+            color: #94a3b8;
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            font-weight: 300;
+            animation: fadeText 1.5s ease-in-out infinite alternate;
+        }
+        @keyframes fadeText {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        /* ====== باقي أنماط الموقع ====== */
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: rgba(22, 30, 49, 0.7);
+            --bg-card-hover: rgba(30, 41, 67, 0.85);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --navbar-bg: rgba(11, 15, 25, 0.8);
+            --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --modal-bg: rgba(0, 0, 0, 0.85);
+        }
+
+        [data-theme="light"] {
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.8);
+            --bg-card-hover: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%);
+            --accent-glow: rgba(79, 70, 229, 0.15);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --navbar-bg: rgba(248, 250, 252, 0.8);
+            --shadow-lg: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+            --modal-bg: rgba(0, 0, 0, 0.75);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .glow-bg {
+            position: fixed;
+            top: 20%;
+            right: 10%;
+            width: 400px;
+            height: 400px;
+            background: var(--primary-gradient);
+            filter: blur(160px);
+            opacity: 0.18;
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--navbar-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(15deg) scale(1.05);
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+        }
+
+        .hero-text {
+            flex: 1 1 55%;
+        }
+
+        .hero-image {
+            flex: 1 1 35%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            width: 380px;
+            height: 380px;
+            object-fit: cover;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(168, 85, 247, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .hero-image img:hover {
+            transform: scale(1.02) rotate(-1deg);
+            box-shadow: 0 30px 60px -12px rgba(99, 102, 241, 0.4);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.2rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 1.8rem;
+            box-shadow: 0 4px 20px var(--accent-glow);
+        }
+
+        .badge-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #10b981;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: #fff;
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px var(--accent-glow);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.9rem 2.2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-3px);
+        }
+
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-subtitle {
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: #8b5cf6;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .glass-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.2rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            background: var(--bg-card-hover);
+            transform: translateY(-6px);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            color: white;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .glass-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            font-weight: 700;
+        }
+
+        .glass-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-top: 1.2rem;
+        }
+
+        .tag {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .project-card {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-banner {
+            height: 200px;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-body {
+            padding: 1.8rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-body h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-body p {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .project-link:hover {
+            color: #a855f7;
+        }
+
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--modal-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .video-modal.active {
+            display: flex;
+        }
+
+        .video-modal-content {
+            position: relative;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            background: #000;
+        }
+
+        .video-modal-content video {
+            width: 100%;
+            display: block;
+            max-height: 80vh;
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: transform 0.3s;
+            line-height: 1;
+        }
+
+        .video-modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: #a855f7;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border-radius: 10px;
+            background: var(--bg-main);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #a855f7;
+            box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.15);
+        }
+
+        footer {
+            border-top: 1px solid var(--border-color);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 4rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #a855f7;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 900px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            .hero-image img {
+                width: 260px;
+                height: 260px;
+            }
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            .hero p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-btns {
+                justify-content: center;
+            }
+            .video-modal-content {
+                max-width: 100%;
+            }
+            .video-modal-close {
+                top: -45px;
+                font-size: 1.6rem;
+            }
+            .loader-container {
+                width: 150px;
+                height: 150px;
+            }
+            .ring-1 { width: 130px; height: 130px; }
+            .ring-2 { width: 160px; height: 160px; }
+            .ring-3 { width: 190px; height: 190px; }
+            .logo-am { font-size: 3.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero p {
+                font-size: 1.05rem;
+            }
+            section {
+                padding: 4rem 1.5rem;
+            }
+            .video-modal {
+                padding: 1rem;
+            }
+            .video-modal-close {
+                top: -40px;
+                font-size: 1.4rem;
+            }
+            .loader-container {
+                width: 120px;
+                height: 120px;
+            }
+            .ring-1 { width: 100px; height: 100px; }
+            .ring-2 { width: 130px; height: 130px; }
+            .ring-3 { width: 160px; height: 160px; }
+            .logo-am { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ====== المقدمة 3D ====== -->
+    <div id="preloader">
+        <div class="loader-container">
+            <div class="ring ring-1"></div>
+            <div class="ring ring-2"></div>
+            <div class="ring ring-3"></div>
+            <div class="logo-am">AM</div>
+        </div>
+        <div class="loading-text">جاري التحميل</div>
+    </div>
+
+    <!-- ====== باقي الموقع ====== -->
+    <div class="glow-bg"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <i class="fa-solid fa-code"></i>
+                <span>Abdulrahman</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#services">الخدمات</a></li>
+                <li><a href="#projects">المشاريع</a></li>
+                <li><a href="#contact">تواصل معي</a></li>
+            </ul>
+            <button class="theme-toggle" id="themeToggle" aria-label="تغيير المظهر">
+                <i class="fa-solid fa-moon"></i>
+            </button>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="badge">
+                    <span class="badge-dot"></span>
+                    <span>متاح لاستقبال المشاريع الجديدة</span>
+                </div>
+                <h1>مطور تطبيقات ومواقع <br><span class="gradient-text">أحفر الأفكار في عالم الرقمية</span></h1>
+                <p>أقوم بابتكار تجارب ويب فريدة وتطبيقات سلسة وعالية الأداء عبر استخدام أحدث التقنيات البرمجية لتلبية تطلعاتك وتطوير أعمالك.</p>
+                <div class="hero-btns">
+                    <a href="#contact" class="btn-primary">
+                        <span>بدء مشروع جديد</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </a>
+                    <a href="#projects" class="btn-secondary">
+                        <i class="fa-solid fa-laptop-code"></i>
+                        <span>استعرض الأعمال</span>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="https://g.top4top.io/p_38740hhj70.png" alt="Abdulrahman Mustafa">
+            </div>
+        </div>
+    </section>
+
+    <section id="services">
+        <div class="section-header">
+            <div class="section-subtitle">خبراتي المتميزة</div>
+            <h2 class="section-title">ما الذي يمكنني تقديمه لك؟</h2>
+        </div>
+        <div class="grid">
+            <div class="glass-card">
+                <div class="card-icon"><i class="fa-solid fa-desktop"></i></div>
+                <h3>تطوير المواقع والتطبيقات</h3>
+                <p>بناء واجهات متكاملة متوافقة مع جميع أنواع الشاشات والأجهزة، سريعة التحميل ومبنية وفقاً لأحدث المعايير.</p>
+                <div class="tech-tags">
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="glass-card">
+                <div class="card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                <h3>تصميم تجربة المستخدم UI/UX</h3>
+                <p>تحويل الأفكار المعقدة إلى واجهات بسيطة، جذابة وسهلة الاستخدام ترفع من نسبة تحويل الزوار إلى عملاء.</p>
+                <div class="tech-tags">
+                    <span class="tag">Responsive</span>
+                    <span class="tag">Clean Code</span>
+                    <span class="tag">Modern UI</span>
+                </div>
+            </div>
+            <div class="glass-card">
+                <div class="card-icon"><i class="fa-solid fa-gauge-high"></i></div>
+                <h3>تحسين الأداء و SEO</h3>
+                <p>تسريع أوقات الاستجابة للموقع وتهيئته البرمجية ليتصدر نتائج البحث الأولى على متصفحات Google.</p>
+                <div class="tech-tags">
+                    <span class="tag">Fast Performance</span>
+                    <span class="tag">SEO Optimized</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <div class="section-header">
+            <div class="section-subtitle">معرض الأعمال</div>
+            <h2 class="section-title">نماذج من مشاريع سابقة</h2>
+        </div>
+        <div class="grid">
+            <!-- المشروع 1: تطبيق مطعم عم رجب -->
+            <div class="glass-card project-card">
+                <div class="project-banner" style="background-image: url('https://a.top4top.io/p_38742tscu0.png'); background-size: cover; background-position: center;"></div>
+                <div class="project-body">
+                    <h3>تطبيق مطعم عم رجب</h3>
+                    <p>تطبيق جوال متكامل لإدارة الطلبات والمناوبة، مع واجهة سهلة الاستخدام للعملاء والعاملين في المطعم.</p>
+                    <button class="project-link" id="openVideoBtn1">عرض التفاصيل <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- المشروع 2: تطبيق الدوحه المحمديه -->
+            <div class="glass-card project-card">
+                <div class="project-banner" style="background-image: url('https://b.top4top.io/p_3874k0e7k0.jpg'); background-size: cover; background-position: center;"></div>
+                <div class="project-body">
+                    <h3>تطبيق الدوحه المحمديه</h3>
+                    <p>تطبيق متميز يقدم خدمات متكاملة لمستخدميه، بتصميم عصري وتجربة مستخدم سلسة.</p>
+                    <button class="project-link" id="openVideoBtn2">عرض التفاصيل <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <!-- المشروع 3: متجر الكتروني - ستايلك للرجال (جديد) -->
+            <div class="glass-card project-card">
+                <div class="project-banner" style="background-image: url('https://e.top4top.io/p_38745mc130.png'); background-size: cover; background-position: center;"></div>
+                <div class="project-body">
+                    <h3>متجر الكتروني - ستايلك للرجال</h3>
+                    <p>متجر إلكتروني متخصص في الأزياء الرجالية، يوفر تجربة تسوق سلسة مع أحدث صيحات الموضة.</p>
+                    <button class="project-link" id="openVideoBtn3">عرض التفاصيل <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-modal-close" id="closeVideoBtn"><i class="fa-solid fa-xmark"></i></button>
+            <video controls autoplay id="modalVideo">
+                <source src="" type="video/mp4">
+                متصفحك لا يدعم تشغيل الفيديو.
+            </video>
+        </div>
+    </div>
+
+    <section id="contact">
+        <div class="section-header">
+            <div class="section-subtitle">هل لديك فكرة مشروع؟</div>
+            <h2 class="section-title">دعنا نعمل معاً</h2>
+        </div>
+        <div class="glass-card contact-container">
+            <div class="contact-info">
+                <h3>معلومات التواصل</h3>
+                <p>لا تتردد في مراسلتي لمناقشة التفاصيل، أو لاستشاري بخصوص مشروعك القادم.</p>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-regular fa-envelope"></i></div>
+                    <div>
+                        <div style="font-size:0.85rem; color:var(--text-muted)">البريد الإلكتروني</div>
+                        <strong>contact@example.com</strong>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+                    <div>
+                        <div style="font-size:0.85rem; color:var(--text-muted)">الموقع</div>
+                        <strong>الشرق الأوسط - متاح للعمل عن بُعد</strong>
+                    </div>
+                </div>
+            </div>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">الاسم الكامل</label>
+                    <input type="text" id="name" placeholder="مثال: أحمد محمد" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">البريد الإلكتروني</label>
+                    <input type="email" id="email" placeholder="name@domain.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">تفاصيل المشروع</label>
+                    <textarea id="message" rows="4" placeholder="كيف يمكنني مساعدتك؟" required></textarea>
+                </div>
+                <button type="submit" class="btn-primary">إرسال الرسالة</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+        <p>جميع الحقوق محفوظة &copy; <span id="year"></span> | Abdulrahman Mustafa</p>
+    </footer>
+
+    <script>
+        // ====== إخفاء المقدمة بعد 3 ثوانٍ ======
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('preloader').classList.add('hidden');
+            }, 3000);
+        });
+
+        // ====== باقي الكود (السنة، التبديل، الفورم، الفيديو) ======
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            if (currentTheme === 'light') {
+                document.body.removeAttribute('data-theme');
+                themeIcon.className = 'fa-solid fa-moon';
+            } else {
+                document.body.setAttribute('data-theme', 'light');
+                themeIcon.className = 'fa-solid fa-sun';
+            }
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('شكراً لتواصلك! تم استلام رسالتك بنجاح وسأرد عليك في أقرب وقت.');
+            e.target.reset();
+        });
+
+        const modal = document.getElementById('videoModal');
+        const closeBtn = document.getElementById('closeVideoBtn');
+        const video = document.getElementById('modalVideo');
+
+        function openModal(videoSrc) {
+            video.querySelector('source').src = videoSrc;
+            video.load();
+            modal.classList.add('active');
+            video.play().catch(() => {});
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            video.pause();
+            video.currentTime = 0;
+        }
+
+        document.getElementById('openVideoBtn1').addEventListener('click', () => {
+            openModal('https://f.top4top.io/m_3874e0sd40.mp4');
+        });
+        document.getElementById('openVideoBtn2').addEventListener('click', () => {
+            openModal('https://h.top4top.io/m_3874hkx310.mp4');
+        });
+        document.getElementById('openVideoBtn3').addEventListener('click', () => {
+            openModal('https://d.top4top.io/m_3874ry1r10.mp4');
+        });
+
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+        });
+    </script>
+</body>
+</html>
